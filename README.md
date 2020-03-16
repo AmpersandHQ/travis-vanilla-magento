@@ -1,5 +1,7 @@
 # ampersand/travis-vanilla-magento
 
+[![Build Status](https://travis-ci.org/AmpersandHQ/travis-vanilla-magento.svg?branch=master)](https://travis-ci.org/AmpersandHQ/travis-vanilla-magento)
+
 This script helps bootstrap a magento2 instance in travis for running tests against. 
 
 Uses https://store.fooman.co.nz/blog/no-authentication-needed-magento-2-mirror.html

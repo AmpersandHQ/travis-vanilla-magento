@@ -1,6 +1,14 @@
 language: php
 php: 7.3
 
+notifications:
+  email:
+    recipients:
+      - lr@amp.co
+    on_success: change
+    on_failure: always
+    on_error: always
+
 env:
   - TEST_GROUP=latest
   - TEST_GROUP=two_three
