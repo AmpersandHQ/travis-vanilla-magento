@@ -1,0 +1,15 @@
+{
+    "name": "ampersand/test-vanilla-magento-testsuite",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "../"
+        },
+        {
+         "packagist.org": false
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    }
+}

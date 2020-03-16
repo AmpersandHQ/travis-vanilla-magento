@@ -1,0 +1,8 @@
+{
+    "name": "ampersand/test-vanilla-magento",
+    "bin": [
+        "travis-install-magento.sh"
+    ],
+    "description": "A dev dependency helper to set up a LAMP stack and Magento at a specified version in travis, to be used for testing modules",
+    "license": "MIT"
+}
