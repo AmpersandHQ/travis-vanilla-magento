@@ -1,5 +1,5 @@
 {
-    "name": "ampersand/test-vanilla-magento-testsuite",
+    "name": "ampersand/travis-vanilla-magento-testsuite",
     "repositories": [
         {
             "type": "git",
