@@ -41,5 +41,5 @@ This would generate
 - To add sample data set the flag when installing
 
     ```
-    VERSION=2.3.3 NAME=TESTONE WITH_SAMPLE_DATA=1 ./vendor/bin/travis-install-magento.sh
+    NAME=TESTTWO WITH_SAMPLE_DATA=1 ./vendor/bin/travis-install-magento.sh
     ```
