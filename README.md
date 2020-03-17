@@ -26,7 +26,7 @@ Look at this repositories `.travis.yml` to see which dependencies are needed
 
 This would generate
 - https://magento-TESTONE.localhost
-- a database accessible at `mysql -uroot -h127.0.0.1 databaseTESTONE233`
+- a database accessible at `mysql -uroot -h127.0.0.1 databaseTESTONE`
 - To add sample data set the flag when installing
 
     ```
