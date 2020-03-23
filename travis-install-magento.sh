@@ -75,7 +75,7 @@ function install_magento() {
 
     printf "\033[92m###### Running installation ######\n\n\033[0m";
 
-    travis_wait 30 php bin/magento setup:install \
+    php bin/magento setup:install \
         --admin-firstname=ampersand --admin-lastname=developer --admin-email=example@example.com \
         --admin-user=admin --admin-password=somepassword123 \
         --db-name=$DATABASE_NAME --db-user=root --db-host=127.0.0.1\
