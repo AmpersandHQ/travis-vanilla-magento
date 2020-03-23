@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+printf "\033[92m###### Testing that you have access to travis shell functions ...  ######\n\n\033[0m";
+
+if ! travis_wait 1 true ; then
+    echo "travis_wait is not available, please add this script to your .travis.yml with a leading dot . ./vendor/bin/travis-install-magento.sh"
+    exit 1;
+fi
+
 set -e
 
 DIR_BASE="$(dirname $(readlink -f $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")))"
@@ -75,7 +82,7 @@ function install_magento() {
 
     printf "\033[92m###### Running installation ######\n\n\033[0m";
 
-    php bin/magento setup:install \
+    travis_wait 30 php bin/magento setup:install \
         --admin-firstname=ampersand --admin-lastname=developer --admin-email=example@example.com \
         --admin-user=admin --admin-password=somepassword123 \
         --db-name=$DATABASE_NAME --db-user=root --db-host=127.0.0.1\

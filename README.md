@@ -13,16 +13,16 @@ Uses https://store.fooman.co.nz/blog/no-authentication-needed-magento-2-mirror.h
 ## Example
 
 ```
-composer require --dev ampersand/test-vanilla-magento dev-master
+composer require --dev ampersand/test-vanilla-magento
 ```
 
 You call the script from your `.travis.yml` and it will set up a magento instance for you to run tests against.
 
-Look at this repositories `.travis.yml` to see which dependencies are needed
+Look at [this repositories `.travis.yml`](https://github.com/AmpersandHQ/magento2-disable-stock-reservation/blob/master/.travis.yml) to see which dependencies are needed
 
 ### Install a specific version
 
-`VERSION=2.3.3 NAME=TESTONE ./vendor/bin/travis-install-magento.sh`
+`VERSION=2.3.3 NAME=TESTONE . ./vendor/bin/travis-install-magento.sh`
 
 This would generate
 - https://magento-TESTONE.localhost
@@ -30,12 +30,12 @@ This would generate
 - To add sample data set the flag when installing
 
     ```
-    VERSION=2.3.3 NAME=TESTONE WITH_SAMPLE_DATA=1 ./vendor/bin/travis-install-magento.sh
+    VERSION=2.3.3 NAME=TESTONE WITH_SAMPLE_DATA=1 . ./vendor/bin/travis-install-magento.sh
     ```
     
 ### Install latest version
 
-`NAME=TESTTWO ./vendor/bin/travis-install-magento.sh`
+`NAME=TESTTWO . ./vendor/bin/travis-install-magento.sh`
 
 This would generate
 - https://magento-TESTTWO.localhost
@@ -43,5 +43,5 @@ This would generate
 - To add sample data set the flag when installing
 
     ```
-    NAME=TESTTWO WITH_SAMPLE_DATA=1 ./vendor/bin/travis-install-magento.sh
+    NAME=TESTTWO WITH_SAMPLE_DATA=1 . ./vendor/bin/travis-install-magento.sh
     ```
