@@ -13,7 +13,7 @@ Uses https://store.fooman.co.nz/blog/no-authentication-needed-magento-2-mirror.h
 ## Example
 
 ```
-composer require --dev ampersand/test-vanilla-magento
+composer require --dev ampersand/travis-vanilla-magento
 ```
 
 You call the script from your `.travis.yml` and it will set up a magento instance for you to run tests against.
