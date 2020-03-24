@@ -3,6 +3,7 @@ printf "\033[92m###### Testing that you have access to travis shell functions ..
 
 if ! travis_wait 1 true ; then
     echo "travis_wait is not available, please add this script to your .travis.yml with a leading dot . ./vendor/bin/travis-install-magento.sh"
+    sleep 5;
     exit 1;
 fi
 
@@ -129,4 +130,3 @@ prepare_php_and_apache
 assert_alive
 
 set +e
-exit 0
