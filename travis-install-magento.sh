@@ -97,6 +97,7 @@ function install_magento() {
     php bin/magento setup:upgrade
     
     mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini.bak ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+    cd -
 }
 
 function with_sampledata() {
@@ -116,6 +117,7 @@ function with_sampledata() {
     fi
 
     rm sampledata.log
+    cd -
 }
 
 function assert_alive() {
