@@ -20,9 +20,10 @@ install:
   - composer require ampersand/travis-vanilla-magento dev-$TRAVIS_BRANCH || composer require ampersand/travis-vanilla-magento $TRAVIS_BRANCH
 
 script:
-  - curl -XGET 'localhost:9200' || true # what version of elasticsearch are we using?
   - if [[ $TEST_GROUP = two_three ]]; then  phpenv versions; phpenv global 7.2; fi
   - if [[ $TEST_GROUP = two_three ]]; then  NAME=$TEST_GROUP WITH_SAMPLE_DATA=1 VERSION=2.3.3  . ./vendor/bin/travis-install-magento.sh; fi
+  - if [[ $TEST_GROUP = latest ]];    then  curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-amd64.deb && sudo dpkg -i --force-confnew elasticsearch-7.6.2-amd64.deb && sudo service elasticsearch restart && sleep 10; fi
+  - if [[ $TEST_GROUP = latest ]];    then  curl -XGET 'localhost:9200'; fi
   - if [[ $TEST_GROUP = latest ]];    then  NAME=$TEST_GROUP WITH_SAMPLE_DATA=1                . ./vendor/bin/travis-install-magento.sh; fi
   - echo "Travis Run Done"
 
