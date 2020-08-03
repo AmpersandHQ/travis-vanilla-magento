@@ -36,7 +36,6 @@ addons:
 
 services:
   - mysql
-  - elasticsearch
 
 cache:
   apt: true
