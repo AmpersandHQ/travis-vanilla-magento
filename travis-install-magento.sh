@@ -73,6 +73,8 @@ function install_magento() {
     cd $DIR_TARGET
     composer config --unset repo.0
     composer config repo.foomanmirror composer https://repo-magento-mirror.fooman.co.nz/
+    composer config minimum-stability dev
+    composer config prefer-stable true
     composer install
 
     php bin/magento | head -2
