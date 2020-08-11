@@ -17,7 +17,7 @@ env:
 install:
   - cd test
   - composer install --no-interaction
-  - composer require ampersand/travis-vanilla-magento dev-$TRAVIS_BRANCH || composer require ampersand/travis-vanilla-magento $TRAVIS_BRANCH
+  - composer require ampersand/travis-vanilla-magento:"dev-$TRAVIS_BRANCH" || composer require ampersand/travis-vanilla-magento $TRAVIS_BRANCH
 
 script:
   - if [[ $TEST_GROUP = two_three ]]; then  phpenv versions; phpenv global 7.2; fi
