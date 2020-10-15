@@ -11,7 +11,7 @@ Uses https://store.fooman.co.nz/blog/no-authentication-needed-magento-2-mirror.h
 - It generates a cert on the fly so you'll need to suppress SSL errors. Any PRs to fix this would be welcomed.
 
 ## Example
-
+ 
 ```
 composer require --dev ampersand/travis-vanilla-magento
 ```
