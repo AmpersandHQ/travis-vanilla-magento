@@ -28,7 +28,7 @@ BASE_URL="https://$BASE_DOMAIN"
 
 function prepare_php_and_apache() {
     if [ "$FULL_INSTALL" -eq "0" ]; then
-      echo "The instance is not configured without a full install"
+      echo "Not configuring php-fpm and apachec as this is not a full install"
       return 0;
     fi
 
@@ -132,7 +132,7 @@ function with_sampledata() {
 
 function assert_alive() {
     if [ "$FULL_INSTALL" -eq "0" ]; then
-      echo "The instance is not configured without a full install"
+      echo "Not performing any database checks as this is not a full instance"
       return 0;
     fi
 
@@ -142,6 +142,17 @@ function assert_alive() {
     mysql -hlocalhost -uroot $DATABASE_NAME -e "select count(*) from catalog_product_entity;"
 }
 
+function install_elasticsearch() {
+  sudo apt-get remove elasticsearch -y
+  curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-amd64.deb
+  sudo dpkg -i --force-confnew elasticsearch-7.6.2-amd64.deb
+  sudo chown elasticsearch:elasticsearch /etc/default/elasticsearch
+  sudo service elasticsearch restart
+  sleep 5
+  curl -XGET 'localhost:9200' | grep "You Know, for Search"
+}
+
+install_elasticsearch
 install_magento
 prepare_php_and_apache
 assert_alive
