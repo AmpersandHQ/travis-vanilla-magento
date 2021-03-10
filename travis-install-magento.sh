@@ -15,6 +15,7 @@ DIR_INSTANCES="$DIR_BASE/instances"
 NAME=$NAME
 NAME=${NAME//[-._]/}
 
+FULL_INSTALL=${FULL_INSTALL:-1}
 WITH_SAMPLE_DATA=${WITH_SAMPLE_DATA:-0}
 VERSION=$VERSION
 VERSION_NO_DOT=${VERSION//[-._]/}
@@ -26,6 +27,11 @@ BASE_DOMAIN="magento-$NAME.localhost"
 BASE_URL="https://$BASE_DOMAIN"
 
 function prepare_php_and_apache() {
+    if [ "$FULL_INSTALL" -eq "0" ]; then
+      echo "The instance is not configured without a full install"
+      return 0;
+    fi
+
     printf "\033[92m###### Configuring php fpm and apache ######\n\n\033[0m";
     # fpm error logs are found here; /home/travis/.phpenv/versions/7.0.25/var/log/php-fpm.log
     sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
@@ -51,7 +57,7 @@ function prepare_php_and_apache() {
 
     printf "\033[92m###### Updating /etc/hosts ######\n\n\033[0m";
 
-	if ! grep -q "127.0.0.1 $BASE_DOMAIN" "/etc/hosts"; then echo "127.0.0.1 $BASE_DOMAIN" | sudo tee -a /etc/hosts; fi;
+	  if ! grep -q "127.0.0.1 $BASE_DOMAIN" "/etc/hosts"; then echo "127.0.0.1 $BASE_DOMAIN" | sudo tee -a /etc/hosts; fi;
 
     printf "\033[92m###### Restarting apache ######\n\n\033[0m";
     sudo a2ensite project.dev.conf
@@ -83,21 +89,23 @@ function install_magento() {
         with_sampledata
     fi
 
-    printf "\033[92m###### Running installation ######\n\n\033[0m";
+    if [ "$FULL_INSTALL" -eq "1" ]; then
+      printf "\033[92m###### Running installation ######\n\n\033[0m";
 
-    travis_wait 30 php bin/magento setup:install \
-        --admin-firstname=ampersand --admin-lastname=developer --admin-email=example@example.com \
-        --admin-user=admin --admin-password=somepassword123 \
-        --db-name=$DATABASE_NAME --db-user=root --db-host=127.0.0.1\
-        --backend-frontname=admin \
-        --base-url=$BASE_URL \
-        --language=en_GB --currency=GBP --timezone=Europe/London \
-        --use-rewrites=1
+      travis_wait 30 php bin/magento setup:install \
+          --admin-firstname=ampersand --admin-lastname=developer --admin-email=example@example.com \
+          --admin-user=admin --admin-password=somepassword123 \
+          --db-name=$DATABASE_NAME --db-user=root --db-host=127.0.0.1\
+          --backend-frontname=admin \
+          --base-url=$BASE_URL \
+          --language=en_GB --currency=GBP --timezone=Europe/London \
+          --use-rewrites=1
 
-    printf "\033[92m###### Running setup upgrade ######\n\n\033[0m";
+      printf "\033[92m###### Running setup upgrade ######\n\n\033[0m";
 
-    php bin/magento setup:upgrade
-    
+      php bin/magento setup:upgrade
+    fi
+
     mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini.bak ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     cd -
 }
@@ -123,6 +131,11 @@ function with_sampledata() {
 }
 
 function assert_alive() {
+    if [ "$FULL_INSTALL" -eq "0" ]; then
+      echo "The instance is not configured without a full install"
+      return 0;
+    fi
+
     printf "\033[92m###### Asserting that you can see $BASE_URL with a 200 response ######\n\n\033[0m";
     curl -s -k --head $BASE_URL | head -1 | grep 200
     printf "\033[92m###### There are the following number of products in the database ######\n\n\033[0m";
