@@ -106,6 +106,9 @@ function install_magento() {
       php bin/magento setup:upgrade
     fi
 
+
+    cp $DIR_BASE/install-config-mysql*.dist dev/tests/integration/etc
+
     mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini.bak ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     cd -
 }
