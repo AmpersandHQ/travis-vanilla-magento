@@ -19,7 +19,7 @@ FULL_INSTALL=${FULL_INSTALL:-1}
 WITH_SAMPLE_DATA=${WITH_SAMPLE_DATA:-0}
 VERSION=$VERSION
 VERSION_NO_DOT=${VERSION//[-._]/}
-
+COMPOSER_REPOSITORY=${COMPOSER_REPOSITORY:https://repo-magento-mirror.fooman.co.nz/}
 DIR_TARGET="$DIR_INSTANCES/$NAME"
 DATABASE_NAME="database-$NAME"
 DATABASE_NAME=${DATABASE_NAME//[-._]/}
@@ -75,10 +75,10 @@ function install_magento() {
     mysql -hlocalhost -uroot -e "create database if not exists $DATABASE_NAME"
 
     printf "\033[92m###### Composer creating $BASE_URL project at $DIR_TARGET ######\n\n\033[0m";
-    composer create-project --repository=https://repo-magento-mirror.fooman.co.nz/ magento/project-community-edition=$VERSION $DIR_TARGET --no-install
+    composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition=$VERSION $DIR_TARGET --no-install
     cd $DIR_TARGET
     composer config --unset repo.0
-    composer config repo.foomanmirror composer https://repo-magento-mirror.fooman.co.nz/
+    composer config repo.composerrepository composer $COMPOSER_REPOSITORY
     composer config minimum-stability dev
     composer config prefer-stable true
     composer install
