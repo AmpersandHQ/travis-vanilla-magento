@@ -1,6 +1,6 @@
 language: php
 php: 7.4
-dist: xenial
+dist: xenial 
 
 notifications:
   email:
