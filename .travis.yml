@@ -17,7 +17,8 @@ env:
 
 install:
   - phpenv config-rm xdebug.ini || true
-  - composer self-update 1.10.16
+  - if [ ! "$TRAVIS_PULL_REQUEST" = "false" ]; then git branch; git branch -D "$TRAVIS_BRANCH" || true; git checkout -b "$TRAVIS_BRANCH"; fi
+  - composer self-update --1
   - cd test
   - composer install --no-interaction
   - composer require ampersand/travis-vanilla-magento:"dev-$TRAVIS_BRANCH" || composer require ampersand/travis-vanilla-magento $TRAVIS_BRANCH
