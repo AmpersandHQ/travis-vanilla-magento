@@ -12,6 +12,9 @@ set -e
 DIR_BASE="$(dirname $(readlink -f $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")))"
 DIR_INSTANCES="$DIR_BASE/instances"
 
+# Ensure we do not use the module under tests vendor/bin directory, as this script is sourced into the current shell it can get a bit polluted / confused
+unset COMPOSER_BIN_DIR
+
 NAME=$NAME
 NAME=${NAME//[-._]/}
 
@@ -159,5 +162,8 @@ install_elasticsearch
 install_magento
 prepare_php_and_apache
 assert_alive
+
+# Ensure we do not use the module under tests vendor/bin directory, as this script is sourced into the current shell it can get a bit polluted / confused
+unset COMPOSER_BIN_DIR
 
 set +e
