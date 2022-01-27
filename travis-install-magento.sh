@@ -149,13 +149,17 @@ function assert_alive() {
 }
 
 function install_elasticsearch() {
+  curl -XGET 'localhost:9200'
+  curl -XGET 'localhost:9200/_cat/indices?v'
   sudo apt-get remove elasticsearch -y
+  sudo rm -rf /etc/elasticsearch /etc/default/elasticsearch /var/lib/elasticsearch/
   curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-amd64.deb
   sudo dpkg -i --force-confnew elasticsearch-7.6.2-amd64.deb
   sudo chown elasticsearch:elasticsearch /etc/default/elasticsearch
-  sudo service elasticsearch restart
+  sudo service elasticsearch restart || sudo journalctl -xe
   sleep 5
-  curl -XGET 'localhost:9200' | grep "You Know, for Search"
+  curl -XGET 'localhost:9200'
+  curl -XGET 'localhost:9200/_cat/indices?v'
 }
 
 install_elasticsearch
