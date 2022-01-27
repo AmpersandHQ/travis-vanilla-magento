@@ -149,8 +149,6 @@ function assert_alive() {
 }
 
 function install_elasticsearch() {
-  curl -XGET 'localhost:9200'
-  curl -XGET 'localhost:9200/_cat/indices?v'
   sudo apt-get remove elasticsearch -y
   sudo rm -rf /etc/elasticsearch /etc/default/elasticsearch /var/lib/elasticsearch/
   curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-amd64.deb
