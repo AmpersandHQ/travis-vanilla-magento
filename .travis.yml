@@ -14,7 +14,7 @@ jobs:
         -   php: 8.1
             env: TEST_GROUP=two_three
         -   php: 7.4
-            env: TEST_GROUP=magento_latest
+            env: TEST_GROUP=latest
         -   php: 7.4
             env: TEST_GROUP=latest-integration
 
