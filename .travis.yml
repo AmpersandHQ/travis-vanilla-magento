@@ -1,8 +1,22 @@
 language: php
-php: 7.4
-dist: xenial
+php:
+    - 7.4
+    - 8.1
 git:
   depth: false
+dist: xenial
+env:
+  - TEST_GROUP=latest-integration
+  - TEST_GROUP=latest
+  - TEST_GROUP=two_three
+jobs:
+    exclude:
+        -   php: 8.1
+            env: TEST_GROUP=two_three
+        -   php: 7.4
+            env: TEST_GROUP=magento_latest
+        -   php: 7.4
+            env: TEST_GROUP=latest-integration
 
 notifications:
   email:
@@ -11,11 +25,6 @@ notifications:
     on_success: change
     on_failure: always
     on_error: always
-
-env:
-  - TEST_GROUP=latest-integration
-  - TEST_GROUP=latest
-  - TEST_GROUP=two_three
 
 install:
   - phpenv config-rm xdebug.ini || true
