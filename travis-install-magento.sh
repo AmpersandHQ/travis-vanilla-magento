@@ -84,6 +84,7 @@ function install_magento() {
     composer config repo.composerrepository composer $COMPOSER_REPOSITORY
     composer config minimum-stability dev
     composer config prefer-stable true
+    composer require monolog/monolog:"!=2.7.0" --no-update # https://github.com/magento/magento2/pull/35596
     composer install
 
     php bin/magento | head -2
