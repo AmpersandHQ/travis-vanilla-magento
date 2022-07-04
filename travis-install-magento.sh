@@ -80,6 +80,9 @@ function install_magento() {
     printf "\033[92m###### Composer creating $BASE_URL project at $DIR_TARGET ######\n\n\033[0m";
     composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition=$VERSION $DIR_TARGET --no-install
     cd $DIR_TARGET
+    composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+    composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true
+    composer config --no-interaction allow-plugins.magento/* true
     composer config --unset repo.0
     composer config repo.composerrepository composer $COMPOSER_REPOSITORY
     composer config minimum-stability dev
