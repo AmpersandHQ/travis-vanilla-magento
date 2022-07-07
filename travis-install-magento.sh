@@ -88,7 +88,6 @@ function install_magento() {
     composer config minimum-stability dev
     composer config prefer-stable true
     composer require monolog/monolog:"!=2.7.0" --no-update # https://github.com/magento/magento2/pull/35596
-    composer remove --no-interaction magento/composer-dependency-version-audit-plugin
     composer install
 
     php bin/magento | head -2
