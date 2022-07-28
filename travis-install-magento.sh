@@ -87,8 +87,10 @@ function install_magento() {
     composer config repo.composerrepository composer $COMPOSER_REPOSITORY
     composer config minimum-stability dev
     composer config prefer-stable true
-    composer require monolog/monolog:"<2.7.0" --no-update # https://github.com/magento/magento2/pull/35596
-    composer install
+    # Use lower version of monolog, https://github.com/magento/magento2/pull/35596 
+    # If composer install fails its likely because of that in 2.4.5 it requires >=2.7.0
+    composer require monolog/monolog:"<2.7.0" --no-update
+    composer install || (composer remove monolog/monolog --no-update --no-interaction && composer install)
 
     php bin/magento | head -2
 
