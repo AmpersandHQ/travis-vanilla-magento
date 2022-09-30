@@ -83,6 +83,7 @@ function install_magento() {
     composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
     composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true
     composer config --no-interaction allow-plugins.magento/* true
+    composer config --no-interaction allow-plugins.magento/composer-dependency-version-audit-plugin false
     composer config --unset repo.0
     composer config repo.composerrepository composer $COMPOSER_REPOSITORY
     composer config minimum-stability dev
