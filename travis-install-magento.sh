@@ -88,11 +88,6 @@ function install_magento() {
     composer config minimum-stability dev
     composer config prefer-stable true
 
-    for devpackage in $(composer show -s | sed -n '/requires (dev)$/,/^$/p' | grep -v 'requires (dev)' | cut -d ' ' -f1 | grep -v phpunit); do
-        echo "composer remove --dev $devpackage --no-update"
-        composer remove --dev $devpackage --no-update
-    done
-
     # Use lower version of monolog, https://github.com/magento/magento2/pull/35596 
     # If composer install fails its likely because of that in 2.4.5 it requires >=2.7.0
     composer require monolog/monolog:"<2.7.0" --no-update
