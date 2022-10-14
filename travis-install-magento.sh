@@ -88,7 +88,7 @@ function install_magento() {
     composer config minimum-stability dev
     composer config prefer-stable true
 
-    for devpackage in $(composer show -s | sed -n '/requires (dev)$/,/^$/p' | grep -v 'requires (dev)' | cut -d ' ' -f1); do
+    for devpackage in $(composer show -s | sed -n '/requires (dev)$/,/^$/p' | grep -v 'requires (dev)' | cut -d ' ' -f1 | grep -v phpunit); do
         echo "composer remove --dev $devpackage --no-update"
         composer remove --dev $devpackage --no-update
     done
