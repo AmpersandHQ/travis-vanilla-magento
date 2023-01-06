@@ -81,6 +81,7 @@ function install_magento() {
     set -v
     composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition=$VERSION $DIR_TARGET --no-install --no-plugins
     cd $DIR_TARGET
+    composer config --no-interaction --unset allow-plugins.magento/* || true
     composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true || true
     composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true || true
     composer config --no-interaction allow-plugins.magento/composer-dependency-version-audit-plugin false
@@ -89,12 +90,13 @@ function install_magento() {
     composer config repo.composerrepository composer $COMPOSER_REPOSITORY
     composer config minimum-stability dev
     composer config prefer-stable true
-    cat composer.json
-    
+
     # Use lower version of monolog, https://github.com/magento/magento2/pull/35596 
     # If composer install fails its likely because of that in 2.4.5 it requires >=2.7.0
     composer require monolog/monolog:"<2.7.0" --no-update
     composer remove magento/composer-dependency-version-audit-plugin --no-update || true
+    cat composer.json
+    ls -l composer.*
     composer install || (composer remove monolog/monolog --no-update --no-interaction && composer install)
 
     php bin/magento | head -2
@@ -171,7 +173,7 @@ function install_elasticsearch() {
   curl -XGET 'localhost:9200/_cat/indices?v'
 }
 
-install_elasticsearch
+#install_elasticsearch
 install_magento
 prepare_php_and_apache
 assert_alive
