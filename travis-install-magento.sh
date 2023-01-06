@@ -78,6 +78,7 @@ function install_magento() {
     mysql -hlocalhost -uroot -e "create database if not exists $DATABASE_NAME"
 
     printf "\033[92m###### Composer creating $BASE_URL project at $DIR_TARGET ######\n\n\033[0m";
+    set -v
     composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition=$VERSION $DIR_TARGET --no-install --no-plugins
     cd $DIR_TARGET
     composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true || true
@@ -88,7 +89,8 @@ function install_magento() {
     composer config repo.composerrepository composer $COMPOSER_REPOSITORY
     composer config minimum-stability dev
     composer config prefer-stable true
-
+    cat composer.json
+    
     # Use lower version of monolog, https://github.com/magento/magento2/pull/35596 
     # If composer install fails its likely because of that in 2.4.5 it requires >=2.7.0
     composer require monolog/monolog:"<2.7.0" --no-update
