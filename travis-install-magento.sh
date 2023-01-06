@@ -170,7 +170,7 @@ function install_elasticsearch() {
   curl -XGET 'localhost:9200/_cat/indices?v'
 }
 
-#install_elasticsearch
+install_elasticsearch
 install_magento
 prepare_php_and_apache
 assert_alive
