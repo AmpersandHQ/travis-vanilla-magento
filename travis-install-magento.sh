@@ -78,25 +78,22 @@ function install_magento() {
     mysql -hlocalhost -uroot -e "create database if not exists $DATABASE_NAME"
 
     printf "\033[92m###### Composer creating $BASE_URL project at $DIR_TARGET ######\n\n\033[0m";
-    set -v
     composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition=$VERSION $DIR_TARGET --no-install --no-plugins
     cd $DIR_TARGET
-    composer config --no-interaction --unset allow-plugins.magento/* || true
     composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true || true
     composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true || true
-    composer config --no-interaction allow-plugins.magento/composer-dependency-version-audit-plugin false
-    composer config --no-interaction allow-plugins.magento/foobar true || true
+    composer config --no-interaction allow-plugins.magento/* true || true
     composer config --unset repo.0
     composer config repo.composerrepository composer $COMPOSER_REPOSITORY
     composer config minimum-stability dev
     composer config prefer-stable true
 
+    # CLI management of composer replace dependencies
+    php $DIR_BASE/replace-dependencies.php $DIR_TARGET
+
     # Use lower version of monolog, https://github.com/magento/magento2/pull/35596 
     # If composer install fails its likely because of that in 2.4.5 it requires >=2.7.0
     composer require monolog/monolog:"<2.7.0" --no-update
-    composer remove magento/composer-dependency-version-audit-plugin --no-update || true
-    cat composer.json
-    ls -l composer.*
     composer install || (composer remove monolog/monolog --no-update --no-interaction && composer install)
 
     php bin/magento | head -2
