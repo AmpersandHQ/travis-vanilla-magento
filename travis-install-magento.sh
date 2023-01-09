@@ -94,6 +94,8 @@ function install_magento() {
       echo "COMPOSER_INSTALL_REPLACE_AUDIT_MODULE=PASS"
     elif composer require monolog/monolog:"<2.7.0" --no-interaction; then
       echo "COMPOSER_INSTALL_LOWER_MONOLOG=PASS"
+    elif composer require ampersand/replace-magento-composer-dependency-version-audit-plugin:"*" monolog/monolog:"<2.7.0" --no-interaction; then
+      echo "COMPOSER_INSTALL_REPLACE_AUDIT_MODULE_AND_LOWER_MONOLOG=PASS"
     else
       echo "COMPOSER_INSTALL=FAIL"
       false
