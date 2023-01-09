@@ -89,7 +89,7 @@ function install_magento() {
     composer config prefer-stable true
 
     # CLI management of composer replace dependencies
-    php $DIR_BASE/replace-dependencies.php $DIR_TARGET
+    composer require ampersand/replace-magento-composer-dependency-version-audit-plugin:"*" --no-interaction
 
     # Use lower version of monolog, https://github.com/magento/magento2/pull/35596 
     # If composer install fails its likely because of that in 2.4.5 it requires >=2.7.0
