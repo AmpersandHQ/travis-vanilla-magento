@@ -9,8 +9,11 @@ env:
   - TEST_GROUP=latest-integration
   - TEST_GROUP=latest
   - TEST_GROUP=two_three
+  - TEST_GROUP=two_four_one
 jobs:
     exclude:
+        -   php: 8.1
+            env: TEST_GROUP=two_four_one
         -   php: 8.1
             env: TEST_GROUP=two_three
         -   php: 7.4
@@ -36,6 +39,8 @@ install:
 
 script:
   - if [[ $TEST_GROUP = two_three ]];             then  NAME=$TEST_GROUP WITH_SAMPLE_DATA=1 VERSION=2.3.7-p2  . ./vendor/bin/travis-install-magento.sh; fi
+  - if [[ $TEST_GROUP = two_four_one ]];          then  composer self-update --1;                                                                        fi
+  - if [[ $TEST_GROUP = two_four_one ]];          then  NAME=$TEST_GROUP FULL_INSTALL=0 VERSION=2.4.1         . ./vendor/bin/travis-install-magento.sh; fi
   - if [[ $TEST_GROUP = latest ]];                then  NAME=$TEST_GROUP WITH_SAMPLE_DATA=1                   . ./vendor/bin/travis-install-magento.sh; fi
   - if [[ $TEST_GROUP = latest-integration ]];    then  NAME=$TEST_GROUP FULL_INSTALL=0                       . ./vendor/bin/travis-install-magento.sh; fi
   - echo "Travis Run Done"
