@@ -88,18 +88,12 @@ function install_magento() {
     composer config minimum-stability dev
     composer config prefer-stable true
 
-    # CLI management of composer replace dependencies
-    composer require ampersand/replace-magento-composer-dependency-version-audit-plugin:"*" --no-interaction
-
-    # Use lower version of monolog, https://github.com/magento/magento2/pull/35596 
-    # If composer install fails its likely because of that in 2.4.5 it requires >=2.7.0
-    composer require monolog/monolog:"<2.7.0" --no-update
-    if ! composer install; then
-      true
-    elif composer remove monolog/monolog --no-update --no-interaction && composer install; then
-      true
-    elif composer remove ampersand/replace-magento-composer-dependency-version-audit-plugin --no-update --no-interaction && composer install; then
-      true
+    if composer install; then
+      true # plain composer insta
+    elif composer require ampersand/replace-magento-composer-dependency-version-audit-plugin:"*" --no-update --no-interaction && composer install; then
+      true # try without the audit plugin
+    elif composer require monolog/monolog:"<2.7.0" --no-update --no-interaction && composer install; then
+      true # try with downgraded monolog
     else
       echo "composer install attempts failed"
       false
