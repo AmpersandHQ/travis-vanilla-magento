@@ -1,3 +1,7 @@
+# Archived
+
+This is being scaled back in favour of https://github.com/AmpersandHQ/magento-docker-test-instance
+
 # ampersand/travis-vanilla-magento
 
 [![Build Status](https://travis-ci.org/AmpersandHQ/travis-vanilla-magento.svg?branch=master)](https://travis-ci.org/AmpersandHQ/travis-vanilla-magento)
